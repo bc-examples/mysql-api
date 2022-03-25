@@ -39,3 +39,20 @@ CREATE TABLE user_table(
 </pre>
 <li>Käynnistä sovellus (npm start tai nodemon ./bin/www)
 </ul>
+
+### borrows-taulu
+
+Oheisella koodilla voi lisätä tietokantaan borrows-taulu 
+<pre>
+ CREATE TABLE `borrows` (
+  `id_borrows` int NOT NULL AUTO_INCREMENT,
+  `id_book` int DEFAULT NULL,
+  `id_user` int DEFAULT NULL,
+  `borrow_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_borrows`),
+  KEY `book_borrows_idx` (`id_book`),
+  KEY `user_borrows_idx` (`id_user`),
+  CONSTRAINT `book_borrows` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `user_borrows` FOREIGN KEY (`id_user`) REFERENCES `user_table` (`id_user`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB;
+</pre>
