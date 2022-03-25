@@ -10,6 +10,7 @@ dotenv.config();
 var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/book');
 var userRouter = require('./routes/user');
+var loginRouter = require('./routes/login');
 
 var app = express();
 app.use(helmet());
@@ -24,5 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/book', bookRouter);
 app.use('/user', userRouter);
+app.use('/login', loginRouter);
 
 module.exports = app;
