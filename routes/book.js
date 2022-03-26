@@ -9,7 +9,7 @@ router.get('/:id?',
       if (err) {
         response.json(err);
       } else {
-        response.json(dbResult[0]);
+        response.json(dbResult[0].rows);
       }
     });
   } else {
@@ -17,7 +17,7 @@ router.get('/:id?',
       if (err) {
         response.json(err);
       } else {
-        response.json(dbResult);
+        response.json(dbResult.rows);
       }
     });
   }
@@ -30,7 +30,7 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult);
+      response.json(dbResult.rows);
     }
   });
 });
@@ -42,7 +42,7 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult);
+      response.json(dbResult.rows);
     }
   });
 });
@@ -54,7 +54,7 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult.affectedRows);
+      response.json(dbResult.rows.affectedRows);
     }
   });
 });

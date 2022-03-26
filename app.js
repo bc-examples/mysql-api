@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 
-app.use(authenticateToken);
+//app.use(authenticateToken);
 //suojatut reitit
 app.use('/book', bookRouter);
 app.use('/user', userRouter);

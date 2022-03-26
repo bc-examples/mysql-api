@@ -1,3 +1,7 @@
-const mysql = require('mysql');
-const connection = mysql.createPool(process.env.SQL_SERVER);
-module.exports = connection;
+//const mysql = require('mysql');
+const { Pool } = require('pg');
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  
+    });
+module.exports = pool;
