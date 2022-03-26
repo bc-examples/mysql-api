@@ -16,8 +16,10 @@ router.post('/',
             response.json(dbError);
           }
           else{
-            if (dbResult.length > 0) {
-              bcrypt.compare(pass,dbResult[0].password, function(err,compareResult) {
+            console.log(dbResult.rows[0].password);
+            if (dbResult.rows.length > 0) {
+              
+              bcrypt.compare(pass,dbResult.rows[0].password, function(err,compareResult) {
                 if(compareResult) {
                   console.log("succes");
                   const token = generateAccessToken({ username: user });

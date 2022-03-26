@@ -9,7 +9,7 @@ router.get('/:id?',
       if (err) {
         response.json(err);
       } else {
-        response.json(dbResult[0].rows);
+        response.json(dbResult.rows[0]);
       }
     });
   } else {
