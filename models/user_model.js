@@ -23,6 +23,9 @@ const user={
       return db.query('update user_table set username=?, password=? where id_user=?',
       [user.username, hash, id], callback);
     });
+  },
+  getMyBorrows: function(uname, callback){
+    return db.query('SELECT name,author,borrow_date,username FROM book INNER JOIN borrows ON book.id_book=borrows.id_book  INNER JOIN user_table ON user_table.id_user=borrows.id_user  WHERE username=?',[uname], callback);
   }
 
 }

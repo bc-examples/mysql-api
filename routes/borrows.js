@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../models/user_model');
+const borrows = require('../models/borrows_model');
 
 router.get('/:id?',
  function(request, response) {
   if (request.params.id) {
-    user.getById(request.params.id, function(err, dbResult) {
+    borrows.getById(request.params.id, function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
-        response.json(dbResult);
+        response.json(dbResult[0]);
       }
     });
   } else {
-    user.get(function(err, dbResult) {
+    borrows.getAll(function(err, dbResult) {
       if (err) {
         response.json(err);
       } else {
@@ -22,24 +22,27 @@ router.get('/:id?',
     });
   }
 });
+
+
 router.post('/', 
 function(request, response) {
-  user.add(request.body, function(err, count) {
+  borrows.add(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
-      response.json(request.body); 
+      response.json(dbResult);
     }
   });
 });
 
+
 router.delete('/:id', 
 function(request, response) {
-  user.delete(request.params.id, function(err, count) {
+  borrows.delete(request.params.id, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
-      response.json(count);
+      response.json(dbResult);
     }
   });
 });
@@ -47,23 +50,11 @@ function(request, response) {
 
 router.put('/:id', 
 function(request, response) {
-  user.update(request.params.id, request.body, function(err, dbResult) {
+  borrows.update(request.params.id, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult);
-    }
-  });
-});
-
-router.get('/myborrows/:username',
-function(request, response){
-  user.getMyBorrows(request.params.username, function(err,dbResult){
-    if (err){
-      response.json(err);
-    }
-    else{
-      response.json(dbResult);
+      response.json(dbResult.affectedRows);
     }
   });
 });

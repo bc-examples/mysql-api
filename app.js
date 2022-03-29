@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/book');
 var userRouter = require('./routes/user');
 var loginRouter = require('./routes/login');
+var borrowsRouter = require('./routes/borrows');
 const jwt = require('jsonwebtoken');
 
 var app = express();
@@ -31,6 +32,7 @@ app.use(authenticateToken);
 //suojatut reitit
 app.use('/book', bookRouter);
 app.use('/user', userRouter);
+app.use('/borrows', borrowsRouter);
 
 
 function authenticateToken(req, res, next) {
