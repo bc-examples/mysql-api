@@ -1,6 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../models/user_model');
+const path = require('path');
+
+const multer  = require('multer');
+const filePath = path.join(__dirname, '../public/images/');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, filePath)
+  },
+  filename: function (req, file, cb) {
+
+      cb(null,  file.originalname );
+
+  }
+});
 
 router.get('/:id?',
  function(request, response) {
@@ -22,9 +37,13 @@ router.get('/:id?',
     });
   }
 });
-router.post('/', 
+
+const upload = multer({ storage: storage})
+
+router.post('/',upload.single('file'),
 function(request, response) {
-  user.add(request.body, function(err, count) {
+  console.log(request.file.filename);
+  user.add(request.body, request.file.filename, function(err, count) {
     if (err) {
       response.json(err);
     } else {
@@ -32,7 +51,6 @@ function(request, response) {
     }
   });
 });
-
 router.delete('/:id', 
 function(request, response) {
   user.delete(request.params.id, function(err, count) {
