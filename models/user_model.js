@@ -9,10 +9,10 @@ const user={
   getById: function(id, callback) {
     return db.query('select * from user_table where id_user=?', [id], callback);
   },
-  add: function(user, callback) {
+  add: function(user, image_name, callback) {
     bcrypt.hash(user.password, saltRounds, function(err, hash) {
-      return db.query('insert into user_table (username, password) values(?,?)',
-      [user.username, hash], callback);
+      return db.query('insert into user_table (username, image_name, password) values(?,?, ?)',
+      [user.username, image_name, hash], callback);
     });
   },
   delete: function(id, callback) {
@@ -23,6 +23,9 @@ const user={
       return db.query('update user_table set username=?, password=? where id_user=?',
       [user.username, hash, id], callback);
     });
+  },
+  getUserdata: function(username, callback){
+    return db.query('select image_name from user_table where username=?',[username], callback);
   }
 
 }

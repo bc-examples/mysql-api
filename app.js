@@ -1,36 +1,40 @@
 var express = require('express');
-var path = require('path');
+//var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const dotenv=require('dotenv');
 dotenv.config();
+const path = require('path');
 
 var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/book');
 var userRouter = require('./routes/user');
 var loginRouter = require('./routes/login');
+var userDetailsRouter = require('./routes/user_details');
 const jwt = require('jsonwebtoken');
 
-var app = express();
-app.use(helmet());
-app.use(cors());
 
+
+var app = express();
+app.use(cors());
+app.use(helmet());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 //suojaamattomat reitit
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 
-//app.use(authenticateToken);
+app.use(authenticateToken);
 //suojatut reitit
 app.use('/book', bookRouter);
 app.use('/user', userRouter);
+app.use('/userdetails', userDetailsRouter);
 
 
 function authenticateToken(req, res, next) {

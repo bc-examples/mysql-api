@@ -3,11 +3,9 @@ const router = express.Router();
 const user = require('../models/user_model');
 var path = require('path');
 
-router.use(express.static(path.join(__dirname, 'public')));
 
-const multer  = require('multer');
 const filePath = path.join(__dirname, '../public/images/');
-
+const multer  = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, filePath)
@@ -44,7 +42,8 @@ const upload = multer({ storage: storage})
 
 router.post('/',upload.single('file'),
 function(request, response) {
-  user.add(request.body, function(err, count) {
+  console.log(request.file.filename);
+  user.add(request.body, request.file.filename, function(err, count) {
     if (err) {
       response.json(err);
     } else {
@@ -53,13 +52,6 @@ function(request, response) {
   });
 });
 
-router.post('/upload', upload.single('file'), function(req, res) {
-  console.log(req.body.username);
-  const file = req.file.filename;
-  console.log(file);
-
-  res.sendStatus(200);
-});
 
 router.delete('/:id', 
 function(request, response) {
@@ -83,5 +75,6 @@ function(request, response) {
     }
   });
 });
+
 
 module.exports = router;
