@@ -17,6 +17,19 @@ var storage = multer.diskStorage({
   }
 });
 
+const multer  = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, filePath)
+  },
+  filename: function (req, file, cb) {
+
+      cb(null,  file.originalname );
+
+  }
+});
+
 router.get('/:id?',
  function(request, response) {
   if (request.params.id) {
@@ -51,8 +64,6 @@ function(request, response) {
     }
   });
 });
-
-
 router.delete('/:id', 
 function(request, response) {
   user.delete(request.params.id, function(err, count) {
@@ -76,5 +87,16 @@ function(request, response) {
   });
 });
 
+router.get('/myborrows/:username',
+function(request, response){
+  user.getMyBorrows(request.params.username, function(err,dbResult){
+    if (err){
+      response.json(err);
+    }
+    else{
+      response.json(dbResult);
+    }
+  });
+});
 
 module.exports = router;

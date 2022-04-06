@@ -5,6 +5,8 @@ var logger = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const dotenv=require('dotenv');
+const jwt = require('jsonwebtoken');
+
 dotenv.config();
 const path = require('path');
 
@@ -12,9 +14,12 @@ var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/book');
 var userRouter = require('./routes/user');
 var loginRouter = require('./routes/login');
-var userDetailsRouter = require('./routes/user_details');
-const jwt = require('jsonwebtoken');
+var borrowsRouter = require('./routes/borrows');
 
+var app = express();
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(helmet());
+app.use(cors());
 
 
 var app = express();
@@ -34,7 +39,7 @@ app.use(authenticateToken);
 //suojatut reitit
 app.use('/book', bookRouter);
 app.use('/user', userRouter);
-app.use('/userdetails', userDetailsRouter);
+app.use('/borrows', borrowsRouter);
 
 
 function authenticateToken(req, res, next) {
