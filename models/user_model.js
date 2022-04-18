@@ -26,6 +26,9 @@ const user={
   },
   getMyBorrows: function(uname, callback){
     return db.query('SELECT id_borrows, name,author,DATE_FORMAT(borrow_date,"%d.%m.%Y") as date FROM book INNER JOIN borrows ON book.id_book=borrows.id_book  INNER JOIN user_table ON user_table.id_user=borrows.id_user  WHERE username=?',[uname], callback);
+  },
+  getUserData: function(uname, callback){
+    return db.query('SELECT image_name FROM user_table  WHERE username=?',[uname], callback);
   }
 
 }

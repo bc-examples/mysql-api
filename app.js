@@ -15,6 +15,7 @@ var bookRouter = require('./routes/book');
 var userRouter = require('./routes/user');
 var loginRouter = require('./routes/login');
 var borrowsRouter = require('./routes/borrows');
+var userdetailsRouter = require('./routes/user_details');
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,6 +24,12 @@ app.use(cors());
 
 
 var app = express();
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(cors());
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,6 +41,7 @@ app.use(cookieParser());
 //suojaamattomat reitit
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/userdetails', userdetailsRouter);
 
 app.use(authenticateToken);
 //suojatut reitit

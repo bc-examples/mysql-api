@@ -9,12 +9,13 @@ const filePath = path.join(__dirname, '../public/images/');
 router.get('/:username',
 function(request, response){
   console.log("here");
-  user.getUserdata(request.params.username, function(err,dbResult){
+  user.getUserData(request.params.username, function(err,dbResult){
     if(err){
       response.json(err);
     }
     else{
-      response.json(dbResult);
+      response.json(dbResult[0]);
+      console.log(dbResult);
     }
   });
 }
